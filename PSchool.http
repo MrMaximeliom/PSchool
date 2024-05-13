@@ -1,0 +1,6 @@
+@PSchool_HostAddress = http://localhost:5240
+
+GET {{PSchool_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
