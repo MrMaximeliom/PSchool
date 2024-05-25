@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PSchool.Backend.Models;
 using PSchool.Backend.ModelsConfigurations;
+using System.Reflection.Metadata;
 
 namespace PSchool.Backend
 {
@@ -16,18 +17,21 @@ namespace PSchool.Backend
 
             // Change default identity tables names
             builder.Entity<User>().ToTable("users");
-            builder.Entity<IdentityRole>().ToTable("roles");
+            builder.Entity<IdentityRole>().ToTable("roles").HasData(
+                new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "ADMIN" },
+                new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "User", ConcurrencyStamp = "2", NormalizedName = "USER" }
+                );
             builder.Entity<IdentityUserRole<string>>().ToTable("userRoles");
             builder.Entity<IdentityUserClaim<string>>().ToTable("userClaims");
             builder.Entity<IdentityUserLogin<string>>().ToTable("userLogins");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("roleClaims");
             builder.Entity<IdentityUserToken<string>>().ToTable("userTokens");
 
-            // Configure Student and Parent relation
-            builder.Entity<Student>()
-                .HasOne(p => p.Parent)
-                .WithMany(p => p.Students)
-                .HasForeignKey(p => p.ParentId);
+    /*        builder.Entity<User>()
+           .HasOne(e => e.Parent)
+            .WithOne(e => e.User)
+               .HasForeignKey<Parent>(e => e.UserId)
+               .IsRequired();*/
 
             // Configure User properties
             new UserEntityTypeConfiguration().Configure(builder.Entity<User>()); 

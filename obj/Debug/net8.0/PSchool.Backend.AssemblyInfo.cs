@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PSchool.Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43dc2a71213b305c3faab6f269d20d7b6210e70f")]
 [assembly: System.Reflection.AssemblyProductAttribute("PSchool.Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PSchool.Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace PSchool.Backend.Models
 {
@@ -12,19 +13,19 @@ namespace PSchool.Backend.Models
 
         public DateTime LastLoginDateTime { get; set; }
 
+        public DateTime? UpdatedAt { get; set; }
+
         // Relation properties
 
         // Navigation properties
-
-        public List<Parent> Parents { get; set; }
-
-        public List<Student> Students { get; set; }
-
-        public List<RefreshToken> RefreshTokens { get; set; }
+/*
+        [JsonIgnore]
+        public virtual Parent Parent { get; set; } = new Parent();*/
 
 
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = [];
 
-
+        public string FullName => FirstName + " " + LastName;
 
     }
 

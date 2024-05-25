@@ -31,6 +31,14 @@ namespace PSchool.Backend.ModelsConfigurations
             builder
                 .Property(x => x.Siblings)
                 .IsRequired();
+
+
+
+            
+   
+        
+        
+                
         
         }
     }

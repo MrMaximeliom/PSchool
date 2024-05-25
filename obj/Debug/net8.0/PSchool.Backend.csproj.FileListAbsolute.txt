@@ -148,3 +148,6 @@ C:\Users\HopeA\source\repos\PSchool\PSchool\obj\Debug\net8.0\refint\PSchool.Back
 C:\Users\HopeA\source\repos\PSchool\PSchool\obj\Debug\net8.0\PSchool.Backend.pdb
 C:\Users\HopeA\source\repos\PSchool\PSchool\obj\Debug\net8.0\PSchool.Backend.genruntimeconfig.cache
 C:\Users\HopeA\source\repos\PSchool\PSchool\obj\Debug\net8.0\ref\PSchool.Backend.dll
+C:\Users\HopeA\source\repos\PSchool\PSchool\bin\Debug\net8.0\PSchool.Backend.xml
+C:\Users\HopeA\source\repos\PSchool\PSchool\obj\Debug\net8.0\PSchool.Backend.xml
+C:\Users\HopeA\source\repos\PSchool\PSchool\bin\Debug\net8.0\System.Web.Cors.dll

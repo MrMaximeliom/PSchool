@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
+using PSchool.Backend.Models;
 
-namespace PSchool.Backend.Models
+namespace PSchool.Backend.DataTransferObjects
 {
-    public class Parent
+    public class ParentDto
     {
         public int Id { get; set; }
-
+        public string? FullName => User?.FullName ?? string.Empty;
         public string WorkPhone { get; set; } = string.Empty;
 
         public string HomeAddress { get; set; } = string.Empty;
@@ -22,12 +23,7 @@ namespace PSchool.Backend.Models
         // Navigation properties
         [JsonIgnore]
         public virtual User User { get; set; } = null!;
-        public ICollection<Student> Students { get; }  = new List<Student>(); 
-
-        public string? FullName => User?.FullName ?? string.Empty;
-
-
-
+        public ICollection<Student> Students { get; set; }
 
     }
 }

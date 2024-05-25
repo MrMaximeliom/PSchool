@@ -1,0 +1,555 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PSchool.Backend</name>
+    </assembly>
+    <members>
+        <member name="M:PSchool.Backend.Controllers.AuthController.Login(PSchool.Backend.Models.RequestToken)">
+             <summary>
+             Login users and returns token
+             </summary>
+             
+             <param name="email"></param>
+             <param name="password"></param>
+             <returns>a new valid token</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /login
+                 {
+                    "email": "abc@examble.com",
+                    "password": "password"
+                 }
+            
+             </remarks>
+             <response code="200">Returns an auth object with valid token and user's details</response>
+             <response code="400">Returns bad request if email or password is not submitted or no user found </response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.AuthController.Register(PSchool.Backend.Models.RegisterUser)">
+             <summary>
+             Register users and returns token
+             </summary>
+             
+             <param name="firstName"></param>
+             <param name="lastName"></param>
+             <param name="email"></param>
+             <param name="password"></param>
+             <param name="phoneNumber"></param>
+             <returns>a new valid token</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /register
+                 {
+                    "firstName": "first_name",
+                    "lastName": "last_name",
+                    "email": "test@gmail.com",
+                    "password": "password",
+                    "phoneNumber": "0565454321"
+                 }
+            
+             </remarks>
+             <response code="200">Returns an auth object with valid token and user's details</response>
+             <response code="400">Returns bad request if submitted data was wrong </response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.AuthController.RevokeToken(System.String)">
+             <summary>
+             Revoke token
+             </summary>
+             
+             <param name="refreshToken"></param>
+             <returns>returns true if token has been revoked or false otherwise</returns>
+             <remarks>
+             Sample request:
+            
+                 PUT /revoke-token
+                 {
+                    "refreshToken": "token"
+                 }
+            
+             </remarks>
+             <response code="200">Returns true if token has been revoked</response>
+             <response code="400">Returns bad request if submitted token is not valid </response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.AuthController.RefreshToken(System.String)">
+             <summary>
+             Refresh token
+             </summary>
+             
+             <param name="refreshToken"></param>
+             <returns>returns new token</returns>
+             <remarks>
+             Sample request:
+            
+                 PUT /refresh-token
+                 {
+                    "refreshToken": "token"
+                 }
+            
+             </remarks>
+             <response code="200">Returns true if token has been revoked</response>
+             <response code="400">Returns bad request if submitted token is not valid </response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.AuthController.AddUserToRoleToken(PSchool.Backend.Models.AddRole)">
+             <summary>
+             Add user to named role
+             </summary>
+             
+             <param name="userId"></param>
+             <param name="role"></param>
+             <returns>returns new token</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /add-user-to-role
+                 {
+                    "userId": "user_id"
+                    "role": "role_name"
+                 }
+            
+             </remarks>
+             <response code="200">Returns user has been added to role </response>
+             <response code="400">Returns bad request if submitted data was wrong </response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.GetAllParentsAsync">
+             <summary>
+             Gets all parents.
+             </summary>
+             
+             <returns>A list of all parents</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /parents
+            
+             </remarks>
+             <response code="200">Returns all parents</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.GetOnlyParentsWithStudentsAsync">
+             <summary>
+             Gets only parents with students
+             </summary>
+             
+             <returns>A list of only parents whith students </returns>
+             <remarks>
+             Sample request:
+            
+                 GET /parents
+            
+             </remarks>
+             <response code="200">Returns all parents that have at least one student</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.GetParentsAndStudentsAsync">
+             <summary>
+             Gets parents with their students
+             </summary>
+             
+             <returns>A list of parents and their students </returns>
+             <remarks>
+             Sample request:
+            
+                 GET /parents
+            
+             </remarks>
+             <response code="200">Returns all parents that have at least one student</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.GetParentByIdAsync(System.Int32)">
+             <summary>
+             Gets parent  by submitted id
+             </summary> 
+             <param name="id"></param>
+             <returns>requested parent by id</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /Parents/{id:int}
+            
+             </remarks> 
+             <response code="200">Returns parent with submitted id</response>
+             <response code="404">Returns not found if there is no parent with submitted id</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.AddParentAsync(PSchool.Backend.DataTransferObjects.ParentDto)">
+             <summary>
+             Adds new parent 
+             </summary> 
+             <param name="id"></param>
+             <param name="workPhone"></param>
+             <param name="homeAddress"></param>
+             <param name="siblings"></param>
+             <param name="userId"></param>
+             <returns>a newly created parent</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /Parents
+                 {
+                    "id": 1,
+                    "workPhone": "0564534231",
+                    "homeAddress": "address",
+                    "siblings": 2,
+                    "userId": "user-id"
+                 }
+            
+             </remarks>
+             <response code="200">Returns newly added parent</response>
+             <response code="400">Returns bad request if submitted data was wrong</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.UpdateParentAsync(System.Int32,PSchool.Backend.DataTransferObjects.ParentDto)">
+             <summary>
+             Update a parent
+             </summary> 
+             <param name="id"></param>
+             <param name="workPhone"></param>
+             <param name="homeAddress"></param>
+             <param name="siblings"></param>
+             <param name="userId"></param>
+             <returns>an updated parent </returns>
+             <remarks>
+             Sample request:
+            
+                 PUT /Parents/{id:int}
+                 {
+                    "id": 1,
+                    "workPhone": "0564534231",
+                    "homeAddress": "address",
+                    "siblings": 2,
+                    "userId": "user-id"
+                 }
+            
+             </remarks>
+             <response code="200">Returns updated parent</response>
+             <response code="404">if there is no parent record with sumitted id</response>
+             <response code="400">if submitted data was wrong</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.UpdateParentPartial(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{PSchool.Backend.Models.Parent})">
+             <summary>
+             Update partial data for parent
+             </summary>
+             <param name="id"></param>
+             <param name="operationType"></param>
+             <param name="path"></param>
+             <param name="op"></param>
+             <param name="from"></param>
+             <param name="value"></param>
+             <returns> no content </returns>
+             <remarks>
+             Sample request:
+            
+                 PATCH /api/Parents/{id:int}
+                 [ 
+                   {
+                   "operationType": 0,
+                   "path": "/propertyName",
+                   "op": "replace",
+                   "from": "string",
+                   "value": "string"
+                   }
+                 ]
+                    
+                 
+            
+             </remarks>
+             <response code="204">No content</response>
+             <response code="400">If submitted data was wrong</response>
+             <response code="404">If there is no record with submitted id</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.DeleteParentAsync(System.Int32)">
+             <summary>
+             Delete a parent
+             </summary> 
+             <param name="id"></param>
+             <returns>message shows that parent deleted successfully</returns>
+             <remarks>
+             Sample request:
+            
+                 DELETE /Parents/{id:int}
+            
+             </remarks>
+             <response code="200">Deletes a parent</response>
+             <response code="404">if there is no parent with sumitted id</response>
+             <response code="400">if submitted data was wrong</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.StudentController.GetAllStudentsAsync">
+             <summary>
+             Gets all students.
+             </summary>
+             
+             <returns>A list of all students</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /Students
+            
+             </remarks>
+             <response code="200">Returns all students</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.StudentController.GetParentsNamesAsync">
+             <summary>
+             Gets parents full names
+             </summary>
+             
+             <returns>A list of parents with thier full names</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /students/parents-names
+            
+             </remarks>
+             <response code="200">Returns parents with their full names</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.StudentController.GetAllStudentsWithParentsAsync">
+             <summary>
+             Gets all students with parents
+             </summary>
+             
+             <returns>A list of all students with their parents</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /Students
+            
+             </remarks>
+             <response code="200">Returns all students with their parents details</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.StudentController.GetStudentByIdAsync(System.Int32)">
+             <summary>
+             Gets a student by submitted id
+             </summary> 
+             <param name="id"></param>
+             <returns>requested student by id</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /Students/{id:int}
+            
+             </remarks> 
+             <response code="200">Returns student with submitted id</response>
+             <response code="404">Returns not found if there is no student with submitted id</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.StudentController.AddStudentAsync(PSchool.Backend.DataTransferObjects.StudentDto)">
+             <summary>
+             Adds new student 
+             </summary> 
+             <param name="id"></param>
+             <param name="firstName"></param>
+             <param name="lastName"></param>
+             <param name="parentId"></param>
+             <returns>a newly created student</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /Students
+                 {
+                    "id": 1,
+                    "firstName": "Ahmed",
+                    "lastName": "Sami",
+                    "parentId": 1
+                 }
+            
+             </remarks>
+             <response code="200">Returns newly added student</response>
+             <response code="400">Returns bad request if submitted data was wrong</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.StudentController.UpdateStudentAsync(System.Int32,PSchool.Backend.DataTransferObjects.StudentDto)">
+             <summary>
+             Update a Student
+             </summary> 
+             <param name="id"></param>
+             <param name="firstName"></param>
+             <param name="lastName"></param>
+             <param name="parentId"></param>
+             <returns>an updated Student </returns>
+             <remarks>
+             Sample request:
+            
+                 PUT /Students/{id:int}
+                 {
+                    "id": 1,
+                    "firstName": "Ahmed",
+                    "lastName": "Sami",
+                    "parentId": 1
+                 }
+            
+             </remarks>
+             <response code="200">Returns updated Student</response>
+             <response code="404">if there is no Student record with sumitted id</response>
+             <response code="400">if submitted data was wrong</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.StudentController.UpdateStudentPartial(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{PSchool.Backend.Models.Student})">
+             <summary>
+             Update partial data for Student
+             </summary>
+             <param name="id"></param>
+             <param name="operationType"></param>
+             <param name="path"></param>
+             <param name="op"></param>
+             <param name="from"></param>
+             <param name="value"></param>
+             <returns> no content </returns>
+             <remarks>
+             Sample request:
+            
+                 PATCH /api/Students/{id:int}
+                 [ 
+                   {
+                   "operationType": 0,
+                   "path": "/propertyName",
+                   "op": "replace",
+                   "from": "string",
+                   "value": "string"
+                   }
+                 ]
+                    
+                 
+            
+             </remarks>
+             <response code="204">No content</response>
+             <response code="400">If submitted data was wrong</response>
+             <response code="404">If there is no record with submitted id</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.StudentController.DeleteStudentAsync(System.Int32)">
+             <summary>
+             Delete a Student
+             </summary> 
+             <param name="id"></param>
+             <returns>message shows that Student deleted successfully</returns>
+             <remarks>
+             Sample request:
+            
+                 DELETE /Students/{id:int}
+            
+             </remarks>
+             <response code="200">Deletes a Student</response>
+             <response code="404">if there is no Student with sumitted id</response>
+             <response code="400">if submitted data was wrong</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.UserController.GetAllUsersAsync">
+             <summary>
+             Gets all users.
+             </summary>
+             
+             <returns>A list of all users</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /users
+            
+             </remarks>
+             <response code="200">Returns all users</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.UserController.GetUserByIdAsync(System.String)">
+             <summary>
+             Gets a users by submitted id
+             </summary> 
+             <param name="id"></param>
+             <returns>requested users by id</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /users/{id:int}
+            
+             </remarks> 
+             <response code="200">Returns users with submitted id</response>
+             <response code="404">Returns not found if there is no users with submitted id</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.UserController.UpdateUserAsync(System.String,PSchool.Backend.DataTransferObjects.UserDto)">
+             <summary>
+             Update a user
+             </summary> 
+             <param name="id"></param>
+             <param name="firstName"></param>
+             <param name="lastName"></param>
+             <param name="parentId"></param>
+             <returns>an updated users </returns>
+             <remarks>
+             Sample request:
+            
+                 PUT /users/{id:int}
+                 {
+                    "id": 1,
+                    "firstName": "Ahmed",
+                    "lastName": "Sami",
+                    "parentId": 1,
+                    "email":"example@example.com",
+                    
+                 }
+            
+             </remarks>
+             <response code="200">Returns updated users</response>
+             <response code="404">if there is no users record with sumitted id</response>
+             <response code="400">if submitted data was wrong</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.UserController.UpdateStudentPartial(System.String,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{PSchool.Backend.Models.User})">
+             <summary>
+             Update partial data for a user
+             </summary>
+             <param name="id"></param>
+             <param name="operationType"></param>
+             <param name="path"></param>
+             <param name="op"></param>
+             <param name="from"></param>
+             <param name="value"></param>
+             <returns> no content </returns>
+             <remarks>
+             Sample request:
+            
+                 PATCH /api/users/{id:int}
+                 [ 
+                   {
+                   "operationType": 0,
+                   "path": "/propertyName",
+                   "op": "replace",
+                   "from": "string",
+                   "value": "string"
+                   }
+                 ]
+                    
+                 
+            
+             </remarks>
+             <response code="204">No content</response>
+             <response code="400">If submitted data was wrong</response>
+             <response code="404">If there is no record with submitted id</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.UserController.DeleteUserAsync(System.String)">
+             <summary>
+             Delete a user
+             <param name="id"></param>
+             <returns>message shows that users deleted successfully</returns>
+             <remarks>
+             Sample request:
+            
+                 DELETE /users/{id:int}
+            
+             </remarks>
+             <response code="200">Deletes a users</response>
+             <response code="404">if there is no users with sumitted id</response>
+             <response code="400">if submitted data was wrong</response>
+             </summary> 
+        </member>
+        <member name="T:PSchool.Backend.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:PSchool.Backend.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PSchool.Backend.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PSchool.Backend.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:PSchool.Backend.Migrations.AddParentUserRelation">
+            <inheritdoc />
+        </member>
+        <member name="M:PSchool.Backend.Migrations.AddParentUserRelation.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PSchool.Backend.Migrations.AddParentUserRelation.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PSchool.Backend.Migrations.AddParentUserRelation.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSchool.Backend;
 
@@ -11,9 +12,11 @@ using PSchool.Backend;
 namespace PSchool.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240523180050_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,14 +54,14 @@ namespace PSchool.Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6d39bf43-c1dd-436a-ba2b-e1d43b5e2a0d",
+                            Id = "f16d4622-ce64-44f9-bb4f-a8d7779ecdb4",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "3f22e88c-1e89-45cf-b2f0-abf1424d760d",
+                            Id = "ebee5d7f-d92b-4a2f-8589-573d54e0c4f3",
                             ConcurrencyStamp = "2",
                             Name = "User",
                             NormalizedName = "USER"
@@ -273,10 +276,9 @@ namespace PSchool.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Parents", (string)null);
+                    b.ToTable("Parents");
                 });
 
             modelBuilder.Entity("PSchool.Backend.Models.Student", b =>
@@ -310,7 +312,7 @@ namespace PSchool.Backend.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("PSchool.Backend.Models.User", b =>
@@ -393,8 +395,8 @@ namespace PSchool.Backend.Migrations
             modelBuilder.Entity("PSchool.Backend.Models.Parent", b =>
                 {
                     b.HasOne("PSchool.Backend.Models.User", "User")
-                        .WithOne("Parent")
-                        .HasForeignKey("PSchool.Backend.Models.Parent", "UserId")
+                        .WithMany("Parents")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -420,7 +422,7 @@ namespace PSchool.Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsMany("PSchool.Backend.Models.User.RefreshTokens#PSchool.Backend.Models.RefreshToken", "RefreshTokens", b1 =>
+                    b.OwnsMany("PSchool.Backend.Models.RefreshToken", "RefreshTokens", b1 =>
                         {
                             b1.Property<string>("UserId")
                                 .HasColumnType("nvarchar(450)");
@@ -446,7 +448,7 @@ namespace PSchool.Backend.Migrations
 
                             b1.HasKey("UserId", "Id");
 
-                            b1.ToTable("RefreshToken", (string)null);
+                            b1.ToTable("RefreshToken");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
@@ -457,7 +459,7 @@ namespace PSchool.Backend.Migrations
 
             modelBuilder.Entity("PSchool.Backend.Models.User", b =>
                 {
-                    b.Navigation("Parent");
+                    b.Navigation("Parents");
                 });
 #pragma warning restore 612, 618
         }

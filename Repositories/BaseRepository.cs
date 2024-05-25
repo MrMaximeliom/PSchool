@@ -42,6 +42,7 @@ namespace PSchool.Backend.Repositories
 
         public async Task<T?> GetByIdAsync(string id)
         {
+            
             return await _context.Set<T>().FindAsync(id);
         }
 
@@ -74,7 +75,7 @@ namespace PSchool.Backend.Repositories
             return await query.SingleOrDefaultAsync(predicate);
         }
 
-        public IEnumerable<T?> FindAll(Expression<Func<T,bool>> predicate, string[]? includes = null)
+        public async Task<IAsyncEnumerable<T>?> FindAll(Expression<Func<T,bool>> predicate, string[]? includes = null)
         {
             IQueryable<T> query = _context.Set<T>();
 
@@ -85,7 +86,26 @@ namespace PSchool.Backend.Repositories
                     query = query.Include(include);
                 }
             }
-            return [.. query.Where(predicate)];
+            return (IAsyncEnumerable<T>?)await query.ToListAsync();
+        }
+        public async Task<IEnumerable<string>> GetProperty(Expression<Func<T,bool>> predicate, Expression<Func<T,string>> select ,bool isDistinct)
+        {
+
+         
+            return isDistinct ? _context.Set<T>().Where(predicate).Select(select).Distinct() : _context.Set<T>().Where(predicate).Select(select);
+            
+
+    /*        if (includes is not null)
+            {
+                foreach (var include in includes)
+                {
+                    if(isDistinct)
+                    query = query.Include(include).Distinct();
+                    else query = query.Include(include);
+                }
+            }
+            return [.. query];*/
+
         }
 
         public IEnumerable<T> FindAll(Expression<Func<T,bool>> predicate, int? skip , int? take, Expression<Func<T,object>>? orderBy = null , string orderByDirection = OrderBy.Ascending)
@@ -116,7 +136,7 @@ namespace PSchool.Backend.Repositories
 
         public async Task<IEnumerable<T?>> FindAllAsync(Expression<Func<T,bool>> predicate, string[]? includes = null)
         {
-            IQueryable<T> query = _context.Set<T>();
+            IQueryable<T> query = _context.Set<T>().Where(predicate);
 
             if( includes is not null)
             {
@@ -125,7 +145,7 @@ namespace PSchool.Backend.Repositories
                     query = query.Include(include);
                 }
             }
-            return await query.Where(predicate).ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task<IEnumerable<T?>> FindAllAsync(Expression<Func<T,bool>> predicate, int? take, int? skip,
@@ -248,7 +268,13 @@ namespace PSchool.Backend.Repositories
             return [.. query];
         }
 
+        public async Task<IEnumerable<T>?> FindAllAndDive(string  predicate, string diveInclude)
+        {
+            // Not implemented yet
+            var result =  _context.Set<T>().Include(predicate);
+            return await result.Include(diveInclude).ToListAsync(); 
 
+        }
     }
 
 }

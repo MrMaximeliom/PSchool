@@ -26,6 +26,11 @@ namespace PSchool.Backend.ModelsConfigurations
                 .IsRequired()
                 .HasMaxLength(100);
 
+            // Ignore ParentName field
+            builder
+                .Ignore(x => x.ParentName);
+                
+
         }
     }
 }

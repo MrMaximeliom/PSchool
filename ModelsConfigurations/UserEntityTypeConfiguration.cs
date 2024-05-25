@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PSchool.Backend.Models;
+using System.Reflection.Emit;
+using System.Reflection.Metadata;
 
 namespace PSchool.Backend.ModelsConfigurations
 {
@@ -44,7 +46,12 @@ namespace PSchool.Backend.ModelsConfigurations
                 .IsRequired(false)
                 .HasMaxLength(30);
 
-        
+            // Making FullName field not mapped
+            builder.Ignore(x => x.FullName);
+
+           
+
+
         }
 
     }

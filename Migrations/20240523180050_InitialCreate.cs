@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace PSchool.Backend.Migrations
 {
     /// <inheritdoc />
@@ -99,7 +101,8 @@ namespace PSchool.Backend.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     RegistrationDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastLoginDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    LastLoginDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -234,8 +237,7 @@ namespace PSchool.Backend.Migrations
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ParentId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ParentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -246,11 +248,15 @@ namespace PSchool.Backend.Migrations
                         principalTable: "Parents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Students_users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "users",
-                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "ebee5d7f-d92b-4a2f-8589-573d54e0c4f3", "2", "User", "USER" },
+                    { "f16d4622-ce64-44f9-bb4f-a8d7779ecdb4", "1", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -286,11 +292,6 @@ namespace PSchool.Backend.Migrations
                 name: "IX_Students_ParentId",
                 table: "Students",
                 column: "ParentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Students_UserId",
-                table: "Students",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_userClaims_UserId",

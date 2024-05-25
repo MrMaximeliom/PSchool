@@ -13,9 +13,11 @@ namespace PSchool.Backend.Interfaces
         Task<IEnumerable<T>> GetAllAsync();
         T? Find(Expression<Func<T, bool>> predicate, string[]? includes = null);
         Task<T?> FindAsync(Expression<Func<T,bool>> predicate, string[]? includes = null);   
+        Task<IEnumerable<string>> GetProperty(Expression<Func<T, bool>> predicate, Expression<Func<T, string>> select, bool isDistinct);
         IEnumerable<T?> FindAll(Expression<Func<T,bool>> predicate, string? includes = null);
         IEnumerable<T?> FindAll(Expression<Func<T, bool>> predicate, int take, int skip);
-        Task<IEnumerable<T?>> FindAllAsync(Expression<Func<T, bool>> predicate, string[]? includes = null);
+        Task<IEnumerable<T>?> FindAllAndDive(string predicate, string diveInclude);
+        Task<IEnumerable<T>?> FindAllAsync(Expression<Func<T, bool>> predicate, string[]? includes = null);
         Task<IEnumerable<T?>> FindAllAsync(Expression<Func<T,bool>> predicate, int take, int skip);
         Task<IEnumerable<T?>> FindAllAsync(Expression<Func<T, bool>> predicate, int? skip, int? take, Expression<Func<T, object>>? orderBy = null, string orderByDirection = OrderBy.Ascending);
         T Add(T entity);

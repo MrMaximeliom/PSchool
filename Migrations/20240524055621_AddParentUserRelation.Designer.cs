@@ -12,8 +12,8 @@ using PSchool.Backend;
 namespace PSchool.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240513061013_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240524055621_AddParentUserRelation")]
+    partial class AddParentUserRelation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,22 @@ namespace PSchool.Backend.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "6d39bf43-c1dd-436a-ba2b-e1d43b5e2a0d",
+                            ConcurrencyStamp = "1",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "3f22e88c-1e89-45cf-b2f0-abf1424d760d",
+                            ConcurrencyStamp = "2",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -260,7 +276,8 @@ namespace PSchool.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Parents");
                 });
@@ -292,14 +309,9 @@ namespace PSchool.Backend.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ParentId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Students");
                 });
@@ -322,6 +334,9 @@ namespace PSchool.Backend.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("RegistrationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.ToTable("users", (string)null);
@@ -381,8 +396,8 @@ namespace PSchool.Backend.Migrations
             modelBuilder.Entity("PSchool.Backend.Models.Parent", b =>
                 {
                     b.HasOne("PSchool.Backend.Models.User", "User")
-                        .WithMany("Parents")
-                        .HasForeignKey("UserId")
+                        .WithOne("Parent")
+                        .HasForeignKey("PSchool.Backend.Models.Parent", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -392,14 +407,10 @@ namespace PSchool.Backend.Migrations
             modelBuilder.Entity("PSchool.Backend.Models.Student", b =>
                 {
                     b.HasOne("PSchool.Backend.Models.Parent", "Parent")
-                        .WithMany("Students")
+                        .WithMany()
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("PSchool.Backend.Models.User", null)
-                        .WithMany("Students")
-                        .HasForeignKey("UserId");
 
                     b.Navigation("Parent");
                 });
@@ -447,16 +458,9 @@ namespace PSchool.Backend.Migrations
                     b.Navigation("RefreshTokens");
                 });
 
-            modelBuilder.Entity("PSchool.Backend.Models.Parent", b =>
-                {
-                    b.Navigation("Students");
-                });
-
             modelBuilder.Entity("PSchool.Backend.Models.User", b =>
                 {
-                    b.Navigation("Parents");
-
-                    b.Navigation("Students");
+                    b.Navigation("Parent");
                 });
 #pragma warning restore 612, 618
         }

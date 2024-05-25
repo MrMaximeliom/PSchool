@@ -1,11 +1,9 @@
-﻿
+﻿using Newtonsoft.Json;
+using PSchool.Backend.Models;
 
-using Newtonsoft.Json;
-using System.Reflection.Metadata;
-
-namespace PSchool.Backend.Models
+namespace PSchool.Backend.DataTransferObjects
 {
-    public class Student
+    public class StudentDto
     {
         public int Id { get; set; }
 
@@ -21,9 +19,8 @@ namespace PSchool.Backend.Models
 
         // Navigation properties
         [JsonIgnore]
-        public virtual Parent Parent { get; set; }
+        public virtual Parent Parent { get; set; } 
 
-
-        public string ParentName { get; set; }
+        public string? ParentName { get; set; } 
     }
 }

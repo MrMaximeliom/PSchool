@@ -4,6 +4,7 @@ namespace PSchool.Backend.Models
 {
     public class RegisterUser
     {
+        public string? Id{ get; set; }
         public string FirstName { get; set; }   
         public string LastName { get; set; }
 
