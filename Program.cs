@@ -19,7 +19,10 @@ builder.Services.AddCors(options =>
        {
            policy.AllowAnyOrigin();
            policy.AllowAnyHeader();
-       });
+           policy.AllowAnyMethod();
+       policy.WithMethods("PUT");
+
+});
 });
 
 // Add services to the container.

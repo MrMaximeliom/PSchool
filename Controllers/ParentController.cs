@@ -68,6 +68,38 @@ namespace PSchool.Backend.Controllers
 
         }
         /// <summary>
+        /// Gets only parents with students with Parent Full Name and Id only
+        /// </summary>
+        /// 
+        /// <returns>A list of only parents (Full name and Id only) whith students </returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /parents
+        ///
+        /// </remarks>
+        /// <response code="200">Returns all parents (Full name and Id only) that have at least one student</response>
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("with-short-details")]
+        public async Task<IActionResult> GetOnlyParentsWithStudentsShortDetailsAsync()
+        {
+
+            var result = await _unitOfWork.Parents.GetAllAsync();
+            var resultDto = result.Adapt<IEnumerable<ParentDto>>();
+
+            var response = await _context.Parents.Include(p => p.User).Select(
+            p => new 
+            {
+            p.Id,
+            p.FullName,
+            }).ToListAsync();
+
+            return Ok(response);
+
+
+        }
+        /// <summary>
         /// Gets parents with their students
         /// </summary>
         /// 

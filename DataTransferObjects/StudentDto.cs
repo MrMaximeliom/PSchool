@@ -19,7 +19,7 @@ namespace PSchool.Backend.DataTransferObjects
 
         // Navigation properties
         [JsonIgnore]
-        public virtual Parent Parent { get; set; } 
+        public virtual Parent? Parent { get; set; } 
 
         public string? ParentName { get; set; } 
     }

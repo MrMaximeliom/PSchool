@@ -139,6 +139,20 @@
              </remarks>
              <response code="200">Returns all parents that have at least one student</response>
         </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.GetOnlyParentsWithStudentsShortDetailsAsync">
+             <summary>
+             Gets only parents with students with Parent Full Name and Id only
+             </summary>
+             
+             <returns>A list of only parents (Full name and Id only) whith students </returns>
+             <remarks>
+             Sample request:
+            
+                 GET /parents
+            
+             </remarks>
+             <response code="200">Returns all parents (Full name and Id only) that have at least one student</response>
+        </member>
         <member name="M:PSchool.Backend.Controllers.ParentController.GetParentsAndStudentsAsync">
              <summary>
              Gets parents with their students

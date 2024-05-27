@@ -88,25 +88,12 @@ namespace PSchool.Backend.Repositories
             }
             return (IAsyncEnumerable<T>?)await query.ToListAsync();
         }
-        public async Task<IEnumerable<string>> GetProperty(Expression<Func<T,bool>> predicate, Expression<Func<T,string>> select ,bool isDistinct)
+        public async Task<IEnumerable<string>> GetProperty(Expression<Func<T,bool>> predicate, Expression<Func<T, string>> select, bool isDistinct)
         {
-
-         
             return isDistinct ? _context.Set<T>().Where(predicate).Select(select).Distinct() : _context.Set<T>().Where(predicate).Select(select);
             
-
-    /*        if (includes is not null)
-            {
-                foreach (var include in includes)
-                {
-                    if(isDistinct)
-                    query = query.Include(include).Distinct();
-                    else query = query.Include(include);
-                }
-            }
-            return [.. query];*/
-
         }
+
 
         public IEnumerable<T> FindAll(Expression<Func<T,bool>> predicate, int? skip , int? take, Expression<Func<T,object>>? orderBy = null , string orderByDirection = OrderBy.Ascending)
         {

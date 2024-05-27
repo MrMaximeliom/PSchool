@@ -21,7 +21,7 @@ namespace PSchool.Backend.Models
 
         // Navigation properties
         [JsonIgnore]
-        public virtual Parent Parent { get; set; }
+        public virtual Parent Parent { get; set; } = null!;
 
 
         public string ParentName { get; set; }
