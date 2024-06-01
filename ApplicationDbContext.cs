@@ -16,7 +16,10 @@ namespace PSchool.Backend
             base.OnModelCreating(builder);
 
             // Change default identity tables names
-            builder.Entity<User>().ToTable("users");
+            builder.Entity<User>()
+                .ToTable("users")
+                .HasIndex(p => p.PhoneNumber)
+                .IsUnique();
             builder.Entity<IdentityRole>().ToTable("roles").HasData(
                 new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "ADMIN" },
                 new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "User", ConcurrencyStamp = "2", NormalizedName = "USER" }
@@ -26,6 +29,7 @@ namespace PSchool.Backend
             builder.Entity<IdentityUserLogin<string>>().ToTable("userLogins");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("roleClaims");
             builder.Entity<IdentityUserToken<string>>().ToTable("userTokens");
+            
 
     /*        builder.Entity<User>()
            .HasOne(e => e.Parent)

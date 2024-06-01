@@ -125,6 +125,34 @@
              </remarks>
              <response code="200">Returns all parents</response>
         </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.GetParentsWithDetailsByIdAsync(System.Int32)">
+             <summary>
+             Gets parents with details
+             </summary>
+             
+             <returns>A list of all parents with more details</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /parents/update-details
+            
+             </remarks>
+             <response code="200">Returns all parents with more details</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.GetParentsWithDetailsAsync">
+             <summary>
+             Gets parents with details
+             </summary>
+             
+             <returns>A list of all parents with more details</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /parents/with-details
+            
+             </remarks>
+             <response code="200">Returns all parents with more details</response>
+        </member>
         <member name="M:PSchool.Backend.Controllers.ParentController.GetOnlyParentsWithStudentsAsync">
              <summary>
              Gets only parents with students
@@ -182,6 +210,21 @@
              <response code="200">Returns parent with submitted id</response>
              <response code="404">Returns not found if there is no parent with submitted id</response>
         </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.UpdateParentWithDetailsById(System.Int32,PSchool.Backend.DataTransferObjects.ParentDto)">
+             <summary>
+             update parent  by id with details
+             </summary> 
+             <param name="id"></param>
+             <returns>requested parent by id</returns>
+             <remarks>
+             Sample request:
+            
+                 GET /Parents/{id:int}/with-details
+            
+             </remarks> 
+             <response code="200">Returns parent with submitted id</response>
+             <response code="404">Returns not found if there is no parent with submitted id</response>
+        </member>
         <member name="M:PSchool.Backend.Controllers.ParentController.AddParentAsync(PSchool.Backend.DataTransferObjects.ParentDto)">
              <summary>
              Adds new parent 
@@ -228,6 +271,42 @@
                     "homeAddress": "address",
                     "siblings": 2,
                     "userId": "user-id"
+                 }
+            
+             </remarks>
+             <response code="200">Returns updated parent</response>
+             <response code="404">if there is no parent record with sumitted id</response>
+             <response code="400">if submitted data was wrong</response>
+        </member>
+        <member name="M:PSchool.Backend.Controllers.ParentController.UpdateParentWithDetailsAsync(System.Int32,PSchool.Backend.DataTransferObjects.ParentDto)">
+             <summary>
+             Update a parent with user details
+             </summary> 
+             <param name="id"></param>
+             <param name="workPhone"></param>
+             <param name="homeAddress"></param>
+             <param name="siblings"></param>
+             <param name="userId"></param>
+             <param name="firstName"></param>
+             <param name="lastName"></param>
+             <param name="email"></param>
+             <param name="phoneNumber"></param>
+             <returns>an updated parent </returns>
+             <remarks>
+             Sample request:
+            
+                 PUT /Parents/{id:int}
+                 {
+                    "id": 1,
+                    "workPhone": "0564534231",
+                    "homeAddress": "address",
+                    "siblings": 2,
+                    "user":{
+                    "firstName": "Ahmed",
+                    "lastName": "Ali",
+                    "email": "user@example.com",
+                    "phoneNumber": "0505432345"
+                    }
                  }
             
              </remarks>
@@ -451,6 +530,34 @@
              </remarks>
              <response code="200">Returns all users</response>
         </member>
+        <member name="M:PSchool.Backend.Controllers.UserController.AddUserAsync(PSchool.Backend.Models.RegisterUser)">
+             <summary>
+             Adds new user 
+             </summary> 
+             <param name="id"></param>
+             <param name="firstName"></param>
+             <param name="lastName"></param>
+             <param name="email"></param>
+             <param name="password"></param>
+             <param name="phoneNumber"></param>
+             <returns>a newly created parent</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /users
+                 {
+                    "id": 1,
+                    "firstName": "Ahmed",
+                    "lastName": "Ali",
+                    "email": "user@example.com",
+                    "password": "user_password"
+                    "phoneNumber": "0505432345"
+                 }
+            
+             </remarks>
+             <response code="200">Returns newly added user</response>
+             <response code="400">Returns bad request if submitted data was wrong</response>
+        </member>
         <member name="M:PSchool.Backend.Controllers.UserController.GetUserByIdAsync(System.String)">
              <summary>
              Gets a users by submitted id
@@ -563,6 +670,18 @@
             <inheritdoc />
         </member>
         <member name="M:PSchool.Backend.Migrations.AddParentUserRelation.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:PSchool.Backend.Migrations.MakePhoneNumberIndexedAndUnique">
+            <inheritdoc />
+        </member>
+        <member name="M:PSchool.Backend.Migrations.MakePhoneNumberIndexedAndUnique.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PSchool.Backend.Migrations.MakePhoneNumberIndexedAndUnique.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PSchool.Backend.Migrations.MakePhoneNumberIndexedAndUnique.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

@@ -17,14 +17,15 @@ namespace PSchool.Backend.Models
 
         // Relation properties
 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         // Navigation properties
-        [JsonIgnore]
-        public virtual User User { get; set; } = null!;
-        public ICollection<Student> Students { get; }  = new List<Student>(); 
+        
+        public virtual User? User { get; set; } = null!;
+        public ICollection<Student>? Students { get; }  = new List<Student>();
 
-        public string? FullName => User?.FullName ?? string.Empty;
+        public string? FullName { get; set; } = string.Empty;
+
 
 
 

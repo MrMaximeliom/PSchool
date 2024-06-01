@@ -32,6 +32,8 @@ namespace PSchool.Backend.ModelsConfigurations
                 .Property(x => x.Siblings)
                 .IsRequired();
 
+            builder.Ignore(x => x.FullName);
+
 
 
             

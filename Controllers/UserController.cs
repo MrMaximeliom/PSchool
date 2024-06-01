@@ -1,8 +1,10 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PSchool.Backend.DataTransferObjects;
 using PSchool.Backend.Interfaces;
 using PSchool.Backend.Models;
@@ -12,9 +14,14 @@ namespace PSchool.Backend.Controllers
     [Route("api/users")]
     [Produces("application/json")]
     [ApiController]
-    public class UserController(IUnitOfWork unitOfWork) : ControllerBase
+    public class UserController(IUnitOfWork unitOfWork,UserManager<User> userManager,ApplicationDbContext context) : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly UserManager<User> _userManager = userManager;
+        private readonly ApplicationDbContext _context = context;
+
+     
+
 
 
         /// <summary>
@@ -39,6 +46,74 @@ namespace PSchool.Backend.Controllers
             var resultDto = result.Adapt<IEnumerable<UserDto>>();
 
             return Ok(result);
+
+
+        }
+
+        /// <summary>
+        /// Adds new user 
+        /// </summary> 
+        /// <param name="id"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="phoneNumber"></param>
+        /// <returns>a newly created parent</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /users
+        ///     {
+        ///        "id": 1,
+        ///        "firstName": "Ahmed",
+        ///        "lastName": "Ali",
+        ///        "email": "user@example.com",
+        ///        "password": "user_password"
+        ///        "phoneNumber": "0505432345"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Returns newly added user</response>
+        /// <response code="400">Returns bad request if submitted data was wrong</response>
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPost]
+        public async Task<IActionResult> AddUserAsync(RegisterUser UserDto)
+        {
+            if(await _unitOfWork.Users.EmailExistsAsync(UserDto.Email))
+            {
+                return BadRequest("Email is already registered!");
+            }
+
+            var user = UserDto.Adapt<User>();
+            user.UserName = $"@{user.FirstName}_{user.LastName}";
+
+
+            // update user data
+            await _userManager.UpdateAsync(user);
+            var result = await _userManager.CreateAsync(user, UserDto.Password);
+
+            if (!result!.Succeeded)
+            {
+                List<string> errors = [];
+                foreach (var error in result.Errors) {
+                    errors.Add(error.Description);
+                }
+
+                return BadRequest(errors);
+            }
+            var userResult = await _unitOfWork.Users.AddAsync(UserDto.Adapt<User>());
+            await _userManager.UpdateAsync(user);
+            _unitOfWork.Complete();
+            
+            var resultDto = userResult.Adapt<UserDto>();
+
+            
+
+            return Ok(resultDto);
+
 
 
         }

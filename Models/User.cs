@@ -26,7 +26,6 @@ namespace PSchool.Backend.Models
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = [];
 
         public string FullName => FirstName + " " + LastName;
-
     }
 
 
