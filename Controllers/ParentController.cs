@@ -146,7 +146,7 @@ namespace PSchool.Backend.Controllers
             p => new
             {
                 p.Id,
-                p.FullName,
+                FullName = p!.User.FirstName + " " + p.User.LastName,
             }).ToListAsync();
 
             return Ok(response);
