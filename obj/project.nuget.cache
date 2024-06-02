@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "eNIZ5c+KE6c=",
+  "dgSpecHash": "RYo1MdCRDVY=",
   "success": true,
   "projectFilePath": "C:\\Users\\HopeA\\source\\repos\\PSchool\\PSchool\\PSchool.Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HopeA\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\HopeA\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\HopeA\\.nuget\\packages\\dotenv.net\\3.1.3\\dotenv.net.3.1.3.nupkg.sha512",
     "C:\\Users\\HopeA\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\HopeA\\.nuget\\packages\\mapster\\7.4.0\\mapster.7.4.0.nupkg.sha512",
     "C:\\Users\\HopeA\\.nuget\\packages\\mapster.core\\1.2.1\\mapster.core.1.2.1.nupkg.sha512",

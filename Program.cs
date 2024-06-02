@@ -1,3 +1,4 @@
+using dotenv.net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,7 @@ Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
+        DotEnv.Read()["DEFAULT_CONNECTION"],
         b =>
         {
             b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);

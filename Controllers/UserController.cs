@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using dotenv.net;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -41,6 +42,8 @@ namespace PSchool.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsersAsync()
         {
+            var envVars = DotEnv.Read();
+            Console.WriteLine(DotEnv.Read()["DEFAULT_CONNECTION"]);
 
             var result = await _unitOfWork.Users.GetAllAsync();
             var resultDto = result.Adapt<IEnumerable<UserDto>>();
